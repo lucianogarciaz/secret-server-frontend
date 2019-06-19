@@ -12,13 +12,10 @@ export default {
     GetSecret,
     Buttons
   },
-  created () {
-    console.log('The web is loaded')
-  },
   data () {
     return {
-      newSecVisible: false,
-      getSecVisible: true
+      newSecVisible: true,
+      getSecVisible: false
     }
   },
   computed: {

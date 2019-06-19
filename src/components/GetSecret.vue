@@ -2,13 +2,18 @@
 </template>
 <script>
 import axios from 'axios'
+import moment from 'moment'
+var axiosInstance = axios.create({
+  baseURL: 'http://104.251.219.141:8089'
+})
 export default {
   data () {
     return {
       finished: false,
       secret: {
         IdSecret: null
-      }
+      },
+      error: null
     }
   },
   computed: {
@@ -22,17 +27,40 @@ export default {
   },
   methods: {
     submitbutton () {
-      console.log('test tes test test ')
-      axios.get('http://104.251.219.141:8089/secret?IdSecret=3d155b9a-926b-11e9-a934-6bc28d7abb3c', function (data, status, request) {
-        console.log(data, status, request)
-        if (status === 200) {
-          this.users = data
-        }
-      })
-      this.finished = !this.finished
+      var _this = this
+      if (_this.finished) {
+        _this.finished = false
+        _this.secret = {}
+        return
+      }
+      if (_this.secret.IdSecret === null || _this.secret.IdSecret === '') {
+        _this.error = 'You have to insert your key'
+        return
+      }
+      axiosInstance.get(`secret?IdSecret=` + _this.secret.IdSecret)
+        .then(response => {
+          var data = response.data
+          if (data.Id !== '0') {
+            _this.error = null
+            _this.secret.Secret = data.Secret.Secret
+            _this.secret.CreatedDate = moment(data.Secret.CreatedDate, 'DD-MM-Y hh:mm:ss')
+            _this.secret.ExpireAfter = data.Secret.ExpireAfter ? moment(data.Secret.CreatedDate, 'Y-MM-DD hh:mm:ss')
+              .add(data.Secret.ExpireAfter, 'minutes')
+              .format('DD-MM-Y hh:mm:ss') : 'Never'
+            _this.secret.ExpireAfterViews = data.Secret.ExpireAfterViews ? data.Secret.ExpireAfterViews : 'Never'
+            _this.finished = true
+          } else {
+            _this.error = data.Message
+          }
+        })
+    .catch(e => {
+      _this.error = 'Mmmm.. Something is wrong...'
+    })
     },
     emitGet () {
-      console.log('get secret event Emited!')
+      this.secret = {}
+      this.finished = false
+      this.error = null
       this.$emit('get', true)
     }
   }
