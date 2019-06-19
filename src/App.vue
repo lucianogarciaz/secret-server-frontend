@@ -14,7 +14,7 @@ export default {
   },
   data () {
     return {
-      newSecVisible: true,
+      newSecVisible: false,
       getSecVisible: false
     }
   },
