@@ -1,0 +1,8 @@
+{
+  "name": "Secret Server",
+  "short_name": "Secret-server",
+  "lang": "en-GB",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#3273dc"
+}

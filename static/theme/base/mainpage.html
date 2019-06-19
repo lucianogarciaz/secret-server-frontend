@@ -1,0 +1,11 @@
+<div>
+  <transition name="fade">
+    <Buttons v-show="isVisible" @get="getSecret" @new="newSecret"/>
+  </transition>
+  <transition name="slide-fade">
+    <GetSecret @get="getSecret" v-show="getSecVisible"/>
+  </transition>
+  <transition name="bounce">
+    <NewSecret @new="newSecret" v-show="newSecVisible"/>
+  </transition>
+</div>

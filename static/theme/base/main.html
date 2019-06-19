@@ -1,0 +1,41 @@
+<section id="main">
+
+    <div class="row">
+
+       <div class="three columns">
+
+          <img class="profile-pic"  src="/static/profile-pic.jpg" alt="" />
+
+       </div>
+
+       <div class="nine columns main-col">
+          <h2>About Me</h2>
+          <p v-html="biography.text">
+          </p>
+          <div class="row">
+
+             <div class="columns contact-details">
+                <h2>Contact Details</h2>
+                <p class="address">
+                <span>{{name}}</span><br>
+                <template v-for="address in profile.details">
+                    <span class="address-title"> {{address.title}}</span><br>
+                    <i :class="address.icon"></i> 
+                    <span>{{address.value}}<br>
+                   </span>
+                </template>
+                <br>
+                <span>{{profile.cellphone}}</span><br>
+                
+                <span class="email">{{profile.mail}}</span>
+                </p>
+             </div>
+             <div class="columns download">
+                <p>
+                   <a href="/static/lucianogarciazeman.pdf" target="_blanck" class="button"><i class="fa fa-download"></i>Download Resume</a>
+                </p>
+             </div>
+          </div> <!-- end row -->
+      </div> <!-- end .main-col -->
+    </div>
+  </section>
